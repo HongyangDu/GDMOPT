@@ -108,7 +108,7 @@ python main.py --watch --resume-path log/default/diffusion/Jul10-142653/policy.p
 
 ## 🔍 Some Insights
 
-*A.* Note that the power allocation problem we consider here is a highly simplified one. In such cases, the performance of GDM is not always superior to DRL. For more realistic optimization problems (such as decision problems involving state transitions), considering combining GDM with DRL could be worthwhile, as is explored in our (D2SAC work)ttps://github.com/Lizonghang/AGOD):* 
+*A.* Note that the power allocation problem we consider here is a highly simplified one. In such cases, the performance of GDM is not always superior to DRL. For more realistic optimization problems (such as decision problems involving state transitions), considering combining GDM with DRL could be worthwhile, as is explored in our [D2SAC work](https://github.com/Lizonghang/AGOD):
 
 ["Generative AI-aided Optimization for AI-Generated Content (AIGC) Services in Edge Networks."](https://arxiv.org/abs/2303.13052)
 
