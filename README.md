@@ -31,9 +31,18 @@ Consider a wireless communication network where a base station with total power 
 
 <img src="images/3.png" width = "40%">
 
-The dynamic nature of the wireless environment presents a significant challenge, as the values of the channel gains, denoted as \{*g_1*, ..., *g_M*\}, can fluctuate within a range.
+The dynamic nature of the wireless environment presents a significant challenge, as the values of the channel gains, denoted as \{*g_1*, ..., *g_M*\}, can fluctuate within a range. Therefore, our objective is, **given a set of environmental variables as a condition, to use GDM to denoise the Gaussian noise into the corresponding optimal power allocation scheme under this condition.**
 
-Therefore, our objective is, **given a set of environmental variables as a condition, to use GDM to denoise the Gaussian noise into the corresponding optimal power allocation scheme under this condition.**
+Here, we consider *M= 100*. Specifically, the first 50 channels are in good quality and the last channels are in deep fadings.
+```bash
+    def state(self):
+        # Provide the current state to the agent
+        states1 = np.random.uniform(13, 14, 50)
+        states2 = np.random.uniform(0, 0.1, 50)
+        states = np.concatenate([states1, states2])
+        self._laststate = states
+        return states
+```
 
 
 ## ⚡ Activate Coding Environment
@@ -43,6 +52,7 @@ To create a new conda environment, execute the following command:
 ```bash
 conda create --name gdmopt python==3.8
 ```
+<img src="images/4.png" width = "60%">
 
 Activate the created environment with:
 
@@ -56,15 +66,48 @@ The following package can be installed using pip:
 
 ```bash
 pip install tianshou==0.4.11
+pip install matplotlib==3.7.3
+pip install scipy==1.10.1
 ```
 
 ## 🏃‍♀️ Run the Program
 
-
-
 Run `main.py` in the file `Main` to start the program.
 
+*A.* For the case that an expert database is accessible, in main.py, please set
+```bash
+parser.add_argument('--expert-coef', default=True)
+```
+
+In env/utility.py, please set
+```bash
+actions = torch.abs(actions)
+```
+
+*B.* For the scenario where no expert database exists, in main.py, please set
+```bash
+parser.add_argument('--expert-coef', default=False)
+```
+In env/utility.py, please set
+```bash
+actions = torch.sigmod(actions)
+```
+
 ## 🔍 Check the results
+
+When is model is training, the following command can be used for checking:
+```bash
+tensorboard --logdir .
+```
+<img src="images/7.png" width = "60%">
+
+After the model is well trained, the following command can be used for inference:
+```bash
+python main.py --watch --resume-path log/default/diffusion/Jul10-142653/policy.pth
+```
+
+
+*Note that the power allocation problem we consider here is a highly simplified one. In such cases, the performance of GDM is not always superior to DRL. For more realistic optimization problems (such as decision problems involving state transitions), considering combining GDM with DRL could be worthwhile, as is explored in our D2SAC work:*
 
 ---
 
