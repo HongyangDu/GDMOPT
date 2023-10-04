@@ -11,13 +11,13 @@ Authored by *Hongyang Du, Ruichen Zhang, Yinqiu Liu, Jiacheng Wang, Yijing Lin, 
 The paper can be found at [ArXiv](https://arxiv.org/abs/2308.05384).
 
 ## ⚡ Structure of Our Tutorial
-<img src="images/0.jpg" width = "100%">
+<img src="images/0.jpg" width = "90%">
 
 We initiate our discussion with the foundational knowledge of GDM and the motivation behind their applications in network optimization. This is followed by exploring GDM’s wide applications and fundamental principles and a comprehensive tutorial outlining the steps for using GDM in network optimization. In the context of intelligent networks, we study the impact of GDM on algorithms, e.g., **Deep Reinforcement Learning (DRL)**, and its implications for key scenarios, e.g., **incentive mechanism design**, **Semantic Communications(SemCom)**, **Internet of Vehicles (IoV) networks**, channel estimation, error correction coding, and channel denoising. We conclude our tutorial by discussing potential future research directions and summarizing the key contributions.
 
 ## ⚡ Network Optimization via Generative Diffusion Models
 
-<img src="images/1.png" width = "100%">
+<img src="images/1.png" width = "90%">
 
 GDM training approaches with and without an expert dataset. **Part A** illustrates the GDM training scenario when an expert database is accessible. The process learns from the GDM applications in the image domain: the optimal solution is retrieved from the expert database upon observing an environmental condition, followed by the GDM learning to replicate this optimal solution through forward diffusion and reverse denoising process. **Part B** presents the scenario where no expert database exists. In this case, GDM, with the assistance of a jointly trained solution evaluation network, learns to generate the optimal solution for a given environmental condition by actively exploring the unknown environment.
 
@@ -29,18 +29,20 @@ In this part, we representatively formulate an optimization problem in a wireles
 
 Consider a wireless communication network where a base station with total power *P_T* serves a set of users over multiple orthogonal channels. The objective is to **maximize the sum rate** of all channels by optimally allocating power among the channels. Let *g_n* denote the channel gain for the *n_th* channel and *p_n* denote the power allocated to that channel. The sum rate of all *M* orthogonal channels is given by the sum of their individual rates. Let the noise level be set as *1* without loss of generality for the analysis. The optimization goal is to find the power allocation scheme \{*p_1*, ..., *p_M*\} that maximizes the sum rate *C* under the power budget and the non-negativity constraints as:
 
-<img src="images/3.png" width = "30%">
+<img src="images/3.png" width = "40%">
 
-The dynamic nature of the wireless environment presents a significant challenge, as the values of the channel gains, denoted as \(\left\{ {{g_1}, \ldots,{g_M}} \right\}\), can fluctuate within a range. This variability is illustrated in Fig.~\ref{fig:three_figures}, which depicts the sum rate values for different power allocation schemes and channel gains when \(M = 3\). It is evident that changes in channel conditions can significantly impact the optimal power allocation scheme.
+The dynamic nature of the wireless environment presents a significant challenge, as the values of the channel gains, denoted as \{*g_1*, ..., *g_M*\}, can fluctuate within a range.
 
+Therefore, our objective is, **given a set of environmental variables as a condition, to use GDM to denoise the Gaussian noise into the corresponding optimal power allocation scheme under this condition.**
+
+
+## ⚡ Activate Coding Environment
 
 To create a new conda environment, execute the following command:
 
 ```bash
 conda create --name gdmopt python==3.8
 ```
-
-## ⚡ Activate Environment
 
 Activate the created environment with:
 
