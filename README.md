@@ -27,13 +27,9 @@ GDM training approaches with and without an expert dataset. **Part A** illustrat
 
 In this part, we representatively formulate an optimization problem in a wireless network and show a step-bystep tutorial to solve it by using GDMs.
 
-Consider a wireless communication network where a base station with total power \(P_T\) serves a set of users over multiple orthogonal channels. The objective is to **maximize the sum rate** of all channels by optimally allocating power among the channels. Let \(g_n\) denote the channel gain for the \(n^{\rm th}\) channel and \(p_n\) denote the power allocated to that channel. The sum rate of all \(M\) orthogonal channels is given by the sum of their individual rates~[1], which can be expressed as:
+Consider a wireless communication network where a base station with total power *P_T* serves a set of users over multiple orthogonal channels. The objective is to **maximize the sum rate** of all channels by optimally allocating power among the channels. Let *g_n* denote the channel gain for the *n^{\rm th}* channel and *p_n* denote the power allocated to that channel. The sum rate of all *M* orthogonal channels is given by the sum of their individual rates. Let the noise level be set as *1* without loss of generality for the analysis. The optimization goal is to find the power allocation scheme \{*p_1*, ..., *p_M*\} that maximizes the sum rate *C* under the power budget and the non-negativity constraints as:
 
-![Equation 1](https://latex.codecogs.com/svg.latex?\sum_{m=1}^M \text{log}_2 \left(1 + g_m p_m / N_0\right)),
-
-where \(N_0\) is the noise level that can be set as \(1\) without loss of generality for the analysis. The problem is to find the power allocation scheme \(\left\{ {{p_1}, \ldots,{p_M}} \right\}\) that maximizes the capacity \(C\) under the power budget and the non-negativity constraints as:
-
-![Equation 2](URL_FOR_EQUATION_2),
+<img src="images/3.png" width = "50%">
 
 The dynamic nature of the wireless environment presents a significant challenge, as the values of the channel gains, denoted as \(\left\{ {{g_1}, \ldots,{g_M}} \right\}\), can fluctuate within a range. This variability is illustrated in Fig.~\ref{fig:three_figures}, which depicts the sum rate values for different power allocation schemes and channel gains when \(M = 3\). It is evident that changes in channel conditions can significantly impact the optimal power allocation scheme.
 
