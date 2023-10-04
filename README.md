@@ -127,7 +127,7 @@ Please refer to our tutorial paper for more details.
 ```bibtex
 @article{du2023beyond,
   title={Beyond deep reinforcement learning: A tutorial on generative diffusion models in network optimization},
-  author={Du, Hongyang and Zhang, Ruichen and Liu, Yinqiu and Wang, Jiacheng and Lin, Yijing and Li, Zonghang and Niyato, Dusit and Kang, Jiawen and Xiong, Zehui and Cui, Shuguang and others},
+  author={Du, Hongyang and Zhang, Ruichen and Liu, Yinqiu and Wang, Jiacheng and Lin, Yijing and Li, Zonghang and Niyato, Dusit and Kang, Jiawen and Xiong, Zehui and Cui, Shuguang and Ai, Bo and Zhou, Haibo and Kim, Dong In},
   journal={arXiv preprint arXiv:2308.05384},
   year={2023}
 }
