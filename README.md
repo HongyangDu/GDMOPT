@@ -112,7 +112,7 @@ python main.py --watch --resume-path log/default/diffusion/Jul10-142653/policy.p
 ---
 
 ## Citation
-
+If our diffusion based method can be used in your paper, please help cite:
 ```bibtex
 @article{du2023beyond,
   title={Beyond Deep Reinforcement Learning: A Tutorial on Generative Diffusion Models in Network Optimization},
@@ -120,5 +120,57 @@ python main.py --watch --resume-path log/default/diffusion/Jul10-142653/policy.p
   journal={},
   year={2023},
   publisher={IEEE}
+}
+```
+
+## Technical papers that used our method
+```bibtex
+@article{du2023user,
+  title={User-Centric Interactive AI for Distributed Diffusion Model-based AI-Generated Content},
+  author={Du, Hongyang and Zhang, Ruichen and Niyato, Dusit and Kang, Jiawen and Xiong, Zehui and Cui, Shuguang and Shen, Xuemin and Kim, Dong In},
+  journal={arXiv preprint arXiv:2311.11094},
+  year={2023}
+}
+```
+```bibtex
+@article{du2023ai,
+  title={AI-generated incentive mechanism and full-duplex semantic communications for information sharing},
+  author={Du, Hongyang and Wang, Jiacheng and Niyato, Dusit and Kang, Jiawen and Xiong, Zehui and Kim, Dong In},
+  journal={IEEE Journal on Selected Areas in Communications},
+  year={2023},
+  publisher={IEEE}
+}
+```
+```bibtex
+@article{du2023generative,
+  title={Generative AI-aided Joint Training-free Secure Semantic Communications via Multi-modal Prompts},
+  author={Du, Hongyang and Liu, Guangyuan and Niyato, Dusit and Zhang, Jiayi and Kang, Jiawen and Xiong, Zehui and Ai, Bo and Kim, Dong In},
+  journal={arXiv preprint arXiv:2309.02616},
+  year={2023}
+}
+```
+```bibtex
+@article{wang2023unified,
+  title={A Unified Framework for Guiding Generative AI with Wireless Perception in Resource Constrained Mobile Edge Networks},
+  author={Wang, Jiacheng and Du, Hongyang and Niyato, Dusit and Kang, Jiawen and Xiong, Zehui and Rajan, Deepu and Mao, Shiwen and others},
+  journal={arXiv preprint arXiv:2309.01426},
+  year={2023}
+}
+```
+```bibtex
+@article{du2023yolo,
+  title={YOLO-based Semantic Communication with Generative AI-aided Resource Allocation for Digital Twins Construction},
+  author={Du, Baoxia and Du, Hongyang and Liu, Haifeng and Niyato, Dusit and Xin, Peng and Yu, Jun and Qi, Mingyang and Tang, You},
+  journal={arXiv preprint arXiv:2306.14138},
+  year={2023}
+}
+```
+```bibtex
+@article{du2023diffusion,
+  title={Diffusion-based Reinforcement Learning for Edge-enabled AI-Generated Content Services},
+  author={Du, Hongyang and Li, Zonghang and Niyato, Dusit and Kang, Jiawen and Xiong, Zehui and Huang, Huawei and Mao, Shiwen},
+  journal={Authorea Preprints},
+  year={2023},
+  publisher={arXiv preprint arXiv:2303.13052}
 }
 ```
