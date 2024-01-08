@@ -93,7 +93,7 @@ In env/utility.py, please set
 actions = torch.sigmod(actions)
 ```
 
-## 🔍 Check the results
+## 🔍 Check the Results
 
 When is model is training, the following command can be used for checking:
 ```bash
@@ -106,8 +106,19 @@ After the model is well trained, the following command can be used for inference
 python main.py --watch --resume-path log/default/diffusion/Jul10-142653/policy.pth
 ```
 
+## 🔍 Some Insights
 
-*Note that the power allocation problem we consider here is a highly simplified one. In such cases, the performance of GDM is not always superior to DRL. For more realistic optimization problems (such as decision problems involving state transitions), considering combining GDM with DRL could be worthwhile, as is explored in our D2SAC work:*
+*A.* Note that the power allocation problem we consider here is a highly simplified one. In such cases, the performance of GDM is not always superior to DRL. For more realistic optimization problems (such as decision problems involving state transitions), considering combining GDM with DRL could be worthwhile, as is explored in our [D2SAC code](https://github.com/Lizonghang/AGOD) and paper:
+
+["Generative AI-aided Optimization for AI-Generated Content (AIGC) Services in Edge Networks."](https://arxiv.org/abs/2303.13052)
+
+Here, the total utility of all users, which is designed as the objective function to be maximized, can only be calculated after a long period of the allocation process. As a result, a decision-making process, such as allocating user tasks to desired servers, has to be modeled by forming a Markov chain.
+
+*B.* The relationship between GDMs and DRL in intelligent network optimization is not just the substitution or competition but rather a compliment and/or supplement of each other that allows for mutual enhancement and learning. In situations where expert strategies are not available for guidance, GDM can leverage a solution evaluation network during the training phase. This is like the Q-network commonly used in DRL. The solution evaluation network estimates the quality of a given solution, e.g., the power allocation scheme in the discussed example, under specific environmental conditions. This quality assessment guides the GDM during its iterative denoising process. Moreover, other advanced techniques from the DRL field can be adopted to make GDM training even more efficient. For example, the double Q-learning technique, which aims at reducing over-estimation in Q-learning, can be adopted. This approach maintains two Q-networks, using the smaller Q-value for updates, thus offering a conservative estimate and mitigating over-optimistic solution assessments. Incorporating such methods can augment GDM training, promoting robustness and efficiency. 
+
+<img src="images/9.png" width = "90%">
+
+Please refer to our tutorial paper for more details.
 
 ---
 
@@ -115,11 +126,10 @@ python main.py --watch --resume-path log/default/diffusion/Jul10-142653/policy.p
 If our diffusion based method can be used in your paper, please help cite:
 ```bibtex
 @article{du2023beyond,
-  title={Beyond Deep Reinforcement Learning: A Tutorial on Generative Diffusion Models in Network Optimization},
-  author={Authors},
-  journal={},
-  year={2023},
-  publisher={IEEE}
+  title={Beyond deep reinforcement learning: A tutorial on generative diffusion models in network optimization},
+  author={Du, Hongyang and Zhang, Ruichen and Liu, Yinqiu and Wang, Jiacheng and Lin, Yijing and Li, Zonghang and Niyato, Dusit and Kang, Jiawen and Xiong, Zehui and Cui, Shuguang and Ai, Bo and Zhou, Haibo and Kim, Dong In},
+  journal={arXiv preprint arXiv:2308.05384},
+  year={2023}
 }
 ```
 
