@@ -1,4 +1,4 @@
-# Beyond Deep Reinforcement Learning: A Tutorial on Generative Diffusion Models in Network Optimization
+# [Beyond Deep Reinforcement Learning: A Tutorial on Generative Diffusion Models in Network Optimization](https://hongyangdu.github.io/GDMOPT/)
 
 Generative Diffusion Models (GDMs) have emerged as a transformative force in the realm of Generative Artificial Intelligence (GAI), demonstrating their versatility and efficacy across a variety of applications. The ability to model complex data distributions and generate high-quality samples has made GDMs particularly effective in tasks such as image generation and reinforcement learning. Furthermore, their iterative nature, which involves a series of noise addition and denoising steps, is a powerful and unique approach to learning and generating data.
 
