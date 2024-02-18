@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+  <!-- Replace the content tag with appropriate information -->
+  <meta name="description" content="DESCRIPTION META TAG">
+  <meta property="og:title" content="SOCIAL MEDIA TITLE TAG"/>
+  <meta property="og:description" content="SOCIAL MEDIA DESCRIPTION TAG TAG"/>
+  <meta property="og:url" content="URL OF THE WEBSITE"/>
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
+  <meta property="og:image" content="static/image/your_banner_image.png" />
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+
+  <meta name="twitter:title" content="TWITTER BANNER TITLE META TAG">
+  <meta name="twitter:description" content="TWITTER BANNER DESCRIPTION META TAG">
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+  <meta name="twitter:image" content="static/images/your_twitter_banner_image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Keywords for your paper to be indexed by-->
+  <meta name="keywords" content="KEYWORDS SHOULD BE PLACED HERE">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <title>GDMOPT</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favico.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+
+  <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+</head>
+<body>
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Beyond Deep Reinforcement Learning: A Tutorial on Generative Diffusion Models in Network Optimization</h1>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                Hongyang Du, Ruichen Zhang, Yinqiu Liu, Jiacheng Wang, Yijing Lin, Zonghang Li, Dusit Niyato, Jiawen Kang, Zehui Xiong, Shuguang Cui, Bo Ai, Haibo Zhou, and Dong In Kim</span>
+                  </div>
+
+                  <div class="is-size-5 publication-authors">
+                    <span class="author-block">Nanyang Technological University<br>IEEE Communications Surveys & Tutorials</span>
+                  </div>
+
+                  <div class="column has-text-centered">
+                    <div class="publication-links">
+                         <!-- Arxiv PDF link -->
+                      <span class="link-block">
+                        <a href="https://arxiv.org/pdf/2308.05384.pdf" target="_blank"
+                        class="external-link button is-normal is-rounded is-dark">
+                        <span class="icon">
+                          <i class="fas fa-file-pdf"></i>
+                        </span>
+                        <span>Paper</span>
+                      </a>
+                    </span>
+
+                    <!-- Supplementary PDF link -->
+                    <!-- <span class="link-block">
+                      <a href="static/pdfs/supplementary_material.pdf" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                      </span>
+                      <span>Supplementary</span>
+                    </a>
+                  </span> -->
+
+                  <!-- Github link -->
+                  <span class="link-block">
+                    <a href="https://github.com/HongyangDu/GDMOPT" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+                <!-- ArXiv abstract Link -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2308.05384" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Paper abstract -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            We initiate our discussion with the foundational knowledge of GDM and the motivation behind their applications in network optimization. This is followed by exploring GDM’s wide applications and fundamental principles and a comprehensive tutorial outlining the steps for using GDM in network optimization. In the context of intelligent networks, we study the impact of GDM on algorithms, e.g., <b>Deep Reinforcement Learning (DRL)</b>, and its implications for key scenarios, e.g., <b>incentive mechanism design</b>, <b>Semantic Communications(SemCom)</b>, <b>Internet of Vehicles (IoV) networks</b>, channel estimation, error correction coding, and channel denoising. We conclude our tutorial by discussing potential future research directions and summarizing the key contributions.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+
+<!-- Image carousel -->
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+       <div class="item">
+        <!-- Your image here -->
+        <div align="center">
+          <img src="static/images/0.jpg" width="70%" alt="Tutorial Structure"/>
+        </div>
+        <h2 class="subtitle has-text-centered">
+          The structure of our tutorial.
+        </h2>
+      </div>
+      <div class="item">
+        <!-- Your image here -->
+        <img src="static/images/1.png" alt="Network Optimization via GDM"/>
+        <h2 class="subtitle has-text-centered">
+          This figure demonstrates the network optimization via generative diffusion models.
+        </h2>
+        <h2 class="subtitle has-text-justified">
+          GDM training approaches with and without an expert dataset. <br>
+          <b>Part A</b> illustrates the GDM training scenario when an expert database is accessible. The process learns from the GDM applications in the image domain: the optimal solution is retrieved from the expert database upon observing an environmental condition, followed by the GDM learning to replicate this optimal solution through forward diffusion and reverse denoising process.<br> 
+          <b>Part B</b> presents the scenario where no expert database exists. In this case, GDM, with the assistance of a jointly trained solution evaluation network, learns to generate the optimal solution for a given environmental condition by actively exploring the unknown environment.
+        </h2>
+      </div>
+  </div>
+</div>
+</div>
+</section>
+<!-- End image carousel -->
+
+
+<section class="section hero">
+  <div class="container is-max-desktop">
+      <h2 class="title">Tutorial with an Example</h2>
+      <div class="content has-text-justified">
+        <p>
+          In this part, we representatively formulate an optimization problem in a wireless network and show a step-bystep tutorial to solve it by using GDMs.<br>
+Consider a wireless communication network where a base station with total power $P_T$ serves a set of users over multiple orthogonal channels. The objective is to <b>maximize the sum rate</b> of all channels by optimally allocating power among the channels. Let $g_n$ denote the channel gain for the $n$ th channel and $p_n$ denote the power allocated to that channel. The sum rate of all $M$ orthogonal channels is given by the sum of their individual rates. Let the noise level be set as $1$ without loss of generality for the analysis. The optimization goal is to find the power allocation scheme $\{p_1, ..., p_M\}$ that maximizes the sum rate $C$ under the power budget and the non-negativity constraints as:
+        </p>
+        <div align="center">
+          <img src="static/images/3.png"\ width="50%" alt="Problem Formulation"/>
+        </div>
+
+        <p>
+          The dynamic nature of the wireless environment presents a significant challenge, as the values of the channel gains, denoted as $\{g_1, ..., g_M\}$, can fluctuate within a range. Therefore, our objective is, <b>given a set of environmental variables as a condition, to use GDM to denoise the Gaussian noise into the corresponding optimal power allocation scheme under this condition.</b><br>
+          Here, we consider $M= 100$. Specifically, the first 50 channels are in good quality and the last channels are in deep fadings.
+        </p>
+        <pre>
+          <code>
+            def state(self):
+              # Provide the current state to the agent
+              states1 = np.random.uniform(13, 14, 50)
+              states2 = np.random.uniform(0, 0.1, 50)
+              states = np.concatenate([states1, states2])
+              self._laststate = states
+              return states
+          </code>
+        </pre>
+      </div>
+  </div>
+</section>
+
+<section class="section hero" >
+  <div class="hero-body" >
+  <div class="container is-max-desktop content">
+    <h2 class="title">Run the Program</h2>
+    <div class="content has-text-justified">
+      <p>1) Create a new conda environment with the following command:</p>
+    </div>
+    <pre><code>conda create --name gdmopt python==3.8</code></pre>
+    <div class="content has-text-justified">
+      <p>2) Activate the created environment with the following command:</p>
+    </div>
+    <pre><code>conda activate gdmopt</code></pre>
+    <div class="content has-text-justified">
+      <p>3) Install the following packets using pip:</p>
+    </div>
+    <pre><code>
+      pip install tianshou==0.4.11
+      pip install matplotlib==3.7.3
+      pip install scipy==1.10.1
+    </code></pre>
+    <div class="content has-text-justified">
+      <p>
+        4) Run main.py in the file Main to start the program.<br>
+        <b>A</b>. For the case that an expert database is accessible, in main.py, please set
+        <pre><code>parser.add_argument('--expert-coef', default=True)</code></pre>
+        In env/utility.py, please set
+        <pre><code>actions = torch.abs(actions)</code></pre>
+        <b>B</b>. For the scenario where no expert database exists, in main.py, please set
+        <pre><code>parser.add_argument('--expert-coef', default=False)</code></pre>
+        In env/utility.py, please set
+        <pre><code>actions = torch.sigmod(actions)</code></pre>
+      </p>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="section hero" >
+  <div class="hero-body">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Insights</h2>
+    <div class="content has-text-justified">
+      <p>
+        <b>A</b>. Note that the power allocation problem we consider here is a highly simplified one. In such cases, the performance of GDM is not always superior to DRL. For more realistic optimization problems (such as decision problems involving state transitions), considering combining GDM with DRL could be worthwhile, as is explored in our <a href="https://github.com/Lizonghang/AGOD" target="_blank">D2SAC code</a> and paper <a href="https://arxiv.org/abs/2303.13052" target="_blank">Generative AI-aided Optimization for AI-Generated Content (AIGC) Services in Edge Networks</a><br>
+        <b>B</b>. The relationship between GDMs and DRL in intelligent network optimization is not just the substitution or competition but rather a compliment and/or supplement of each other that allows for mutual enhancement and learning. In situations where expert strategies are not available for guidance, GDM can leverage a solution evaluation network during the training phase. This is like the Q-network commonly used in DRL. The solution evaluation network estimates the quality of a given solution, e.g., the power allocation scheme in the discussed example, under specific environmental conditions. This quality assessment guides the GDM during its iterative denoising process. Moreover, other advanced techniques from the DRL field can be adopted to make GDM training even more efficient. For example, the double Q-learning technique, which aims at reducing over-estimation in Q-learning, can be adopted. This approach maintains two Q-networks, using the smaller Q-value for updates, thus offering a conservative estimate and mitigating over-optimistic solution assessments. Incorporating such methods can augment GDM training, promoting robustness and efficiency. 
+        <div align="center">
+          <img src="static/images/9.png"\ width="50%" alt="Problem Formulation"/>
+        </div>
+      </p>
+    </div>
+  </div>
+</div>
+</section>
+
+
+<!--BibTex citation -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      
+      <pre><code>@article{du2023beyond,
+        title={Beyond deep reinforcement learning: A tutorial on generative diffusion models in network optimization},
+        author={Du, Hongyang and Zhang, Ruichen and Liu, Yinqiu and Wang, Jiacheng and Lin, Yijing and Li, Zonghang and Niyato, Dusit and Kang, Jiawen and Xiong, Zehui and Cui, Shuguang and Ai, Bo and Zhou, Haibo and Kim, Dong In},
+        journal={arXiv preprint arXiv:2308.05384},
+        year={2023}
+      }</code></pre>
+    </div>
+</section>
+<!--End BibTex citation -->
+
+
+  <footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            You are free to borrow the of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+
+  </body>
+  </html>
