@@ -171,10 +171,13 @@ class DiffusionOPT(BasePolicy):
         expert_actions = torch.Tensor([info["expert_action"] for info in batch.info]).to(self._device)
         expert_actions.requires_grad = True
         expert_action = expert_actions
-        expert_action = expert_action.detach().numpy()
-        print('expert_action',expert_action)
-        expert_action = to_torch(expert_action, device=self._device, dtype=torch.float32)
-        expert_action = expert_action
+
+        #  for cpu
+        # expert_action = expert_action.detach().numpy()
+        # print('expert_action',expert_action)
+        # expert_action = to_torch(expert_action, device=self._device, dtype=torch.float32)
+        # expert_action = expert_action
+
         bc_loss = self._actor.loss(expert_action, obs_).mean()
         # bc_loss = F.mse_loss(actff, expert_action)  # Compute the BC loss between actor logits and expert actions
         if update:  # Update actor parameters if update flag is True

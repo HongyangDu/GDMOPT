@@ -31,7 +31,7 @@ def get_args():
     parser.add_argument('-e', '--epoch', type=int, default=1e6)# 1000
     parser.add_argument('--step-per-epoch', type=int, default=1)# 100
     parser.add_argument('--step-per-collect', type=int, default=1)#1000
-    parser.add_argument('-b', '--batch-size', type=int, default=1)
+    parser.add_argument('-b', '--batch-size', type=int, default=64)
     parser.add_argument('--wd', type=float, default=1e-4)
     parser.add_argument('--gamma', type=float, default=0)
     parser.add_argument('--n-step', type=int, default=3)
@@ -60,7 +60,7 @@ def get_args():
                         choices=['linear', 'cosine', 'vp'])
 
     # whether the expert action is availiable
-    parser.add_argument('--expert-coef', default=False)
+    parser.add_argument('--expert-coef', default=True)
 
     # for prioritized experience replay
     parser.add_argument('--prioritized-replay', action='store_true', default=False)
