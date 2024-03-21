@@ -120,6 +120,10 @@ class Diffusion(nn.Module):
     def p_sample(self, x, t, s):
         b, *_, device = *x.shape, x.device
         model_mean, _, model_log_variance = self.p_mean_variance(x=x, t=t, s=s)
+
+        # with torch.random.fork_rng():
+        #     torch.manual_seed(t)
+        #     noise = torch.randn_like(x)
         noise = torch.randn_like(x)
         # no noise when t == 0
         nonzero_mask = (1 - (t == 0).float()).reshape(b, *((1,) * (len(x.shape) - 1)))
@@ -130,6 +134,9 @@ class Diffusion(nn.Module):
         device = self.betas.device
 
         batch_size = shape[0]
+        # with torch.random.fork_rng():
+        #     torch.manual_seed(0)
+        #     x = torch.randn(shape, device=device)
         x = torch.randn(shape, device=device)
 
         if return_diffusion: diffusion = [x]
@@ -138,8 +145,7 @@ class Diffusion(nn.Module):
         for i in reversed(range(0, self.n_timesteps)):
             timesteps = torch.full((batch_size,), i, device=device, dtype=torch.long)
             x = self.p_sample(x, timesteps, state)
-            max_action = 1.0
-
+            # max_action = 1.0
             # ====== for inference ======
             # x.clamp_(-self.max_action, self.max_action)
             # actions = torch.abs(x)

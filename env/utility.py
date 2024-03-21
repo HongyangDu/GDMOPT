@@ -55,19 +55,16 @@ def water(s, total_power):
 
 # Function to compute utility (reward) for the given state and action
 def CompUtility(State, Aution):
-    actions = torch.from_numpy(Aution).float()
-    # actions = torch.abs(actions)
-    actions = torch.sigmoid(1.5*actions)
+    actions = torch.from_numpy(np.array(Aution)).float()
+    actions = torch.abs(actions)
+    # actions = torch.sigmoid(2*actions)
     Aution = actions.numpy()
 
     total_power = 12
-    g_n = State
-
     normalized_weights = Aution / np.sum(Aution)
     a = normalized_weights * total_power
 
-    # print('power allocation',a)
-
+    g_n = State
     SNR = g_n * a
 
     data_rate = np.log2(1 + SNR)
@@ -75,4 +72,5 @@ def CompUtility(State, Aution):
     expert_action, sumdata_rate = water(g_n, total_power)
 
     reward = np.sum(data_rate) - sumdata_rate
-    return reward, expert_action
+
+    return reward, expert_action, a

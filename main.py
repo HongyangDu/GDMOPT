@@ -24,14 +24,14 @@ warnings.filterwarnings('ignore')
 def get_args():
     # Create argument parser
     parser = argparse.ArgumentParser()
-    parser.add_argument("--exploration-noise", type=float, default=0.01) # default=0.01
+    parser.add_argument("--exploration-noise", type=float, default=0)
     parser.add_argument('--algorithm', type=str, default='diffusion_opt')
     parser.add_argument('--seed', type=int, default=0)
     parser.add_argument('--buffer-size', type=int, default=1e6)#1e6
     parser.add_argument('-e', '--epoch', type=int, default=1e6)# 1000
     parser.add_argument('--step-per-epoch', type=int, default=1)# 100
     parser.add_argument('--step-per-collect', type=int, default=1)#1000
-    parser.add_argument('-b', '--batch-size', type=int, default=512)
+    parser.add_argument('-b', '--batch-size', type=int, default=1)
     parser.add_argument('--wd', type=float, default=1e-4)
     parser.add_argument('--gamma', type=float, default=0)
     parser.add_argument('--n-step', type=int, default=3)
@@ -44,7 +44,7 @@ def get_args():
     # parser.add_argument(
     #     '--device', type=str, default='cuda' if torch.cuda.is_available() else 'cpu')
     parser.add_argument(
-        '--device', type=str, default='cpu')
+        '--device', type=str, default='cuda:0')
     parser.add_argument('--resume-path', type=str, default=None)
     parser.add_argument('--watch', action='store_true', default=False)
     parser.add_argument('--lr-decay', action='store_true', default=False)
@@ -145,7 +145,7 @@ def main(args=get_args()):
         lr_maxt=args.epoch,
         expert_coef=args.expert_coef,
         action_space=env.action_space,
-        exploration_noise = GaussianNoise(sigma=args.exploration_noise),
+        exploration_noise = args.exploration_noise,
     )
 
     # Load a previous policy if a path is provided

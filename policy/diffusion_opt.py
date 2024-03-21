@@ -8,7 +8,6 @@ from typing import Any, Dict, List, Type, Optional, Union
 from tianshou.data import Batch, ReplayBuffer, to_torch
 from tianshou.policy import BasePolicy
 from torch.optim.lr_scheduler import CosineAnnealingLR
-from tianshou.exploration import BaseNoise, GaussianNoise
 from .helpers import (
     Losses
 )
@@ -31,7 +30,7 @@ class DiffusionOPT(BasePolicy):
             lr_decay: bool = False,
             lr_maxt: int = 1000,
             expert_coef: bool = False,
-            exploration_noise: Optional[BaseNoise] = GaussianNoise(sigma=0.1),
+            exploration_noise: float = 0.1,
             **kwargs: Any
     ) -> None:
         super().__init__(**kwargs)
@@ -66,6 +65,7 @@ class DiffusionOPT(BasePolicy):
         self._lr_decay = lr_decay  # If true, apply learning rate decay
         self._expert_coef = expert_coef  # Coefficient for policy gradient loss
         self._device = device  # Device to run computations on
+        self.noise_generator = GaussianNoise(sigma=exploration_noise)
 
     def _target_q(self, buffer: ReplayBuffer, indices: np.ndarray) -> torch.Tensor:
         batch = buffer[indices]  # batch.obs_next: s_{t+n}
@@ -123,7 +123,16 @@ class DiffusionOPT(BasePolicy):
         model_ = self._actor if model == "actor" else self._target_actor
         # Feed observations through the selected model to get action logits
         logits, hidden = model_(obs_), None
-        acts = logits # the actions are the logits
+        if self._expert_coef != 0:
+            noise = to_torch(self.noise_generator.generate(logits.shape),
+                             dtype=torch.float32, device=self._device)
+        else:
+            noise = 0
+        # Add the noise to the action
+        noisy_action = logits + noise
+        # Optionally, ensure the noisy_action is within valid action bounds
+        # For example, if your actions are bounded between -1 and 1
+        acts = torch.clamp(noisy_action, -1, 1)
         dist = None  # does not use a probability distribution for actions
 
         return Batch(logits=logits, act=acts, state=hidden, dist=dist)
@@ -218,14 +227,23 @@ class DiffusionOPT(BasePolicy):
             'overall_loss': overall_loss.item()  # Returns the overall loss as part of the results
         }
 
-    def exploration_noise(self, act: Union[np.ndarray, Batch],
-                          batch: Batch) -> Union[np.ndarray, Batch]:
-        # If the noise for exploration is not defined, return the action without adding noise
-        if self._noise is None:
-            return act
-        # If the action is a numpy array, add noise to it for exploration purposes
-        if isinstance(act, np.ndarray):
-            return act + self._noise(act.shape)
-        # For non-numpy actions, the method currently does not support adding exploration noise
-        # return act without modification
-        return act
+class GaussianNoise:
+    """Generates Gaussian noise."""
+
+    def __init__(self, mu=0.0, sigma=0.1):
+        """
+        :param mu: Mean of the Gaussian distribution.
+        :param sigma: Standard deviation of the Gaussian distribution.
+        """
+        self.mu = mu
+        self.sigma = sigma
+
+    def generate(self, shape):
+        """
+        Generate Gaussian noise based on a shape.
+
+        :param shape: Shape of the noise to generate, typically the action's shape.
+        :return: Numpy array with Gaussian noise.
+        """
+        noise = np.random.normal(self.mu, self.sigma, shape)
+        return noise

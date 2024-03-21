@@ -22,7 +22,21 @@ class AIGCEnv(gym.Env):
         self._laststate = None
         self.last_expert_action = None
         # Define the number of steps per episode
-        self._steps_per_episode = 1
+        self._steps_per_episode = 20
+
+    # def rayleigh_channel_gain(ex, sta):
+    #     num_samples = 1
+    #     gain = np.random.normal(ex, sta, num_samples)
+    #     # Square the absolute value to get Rayleigh-distributed gains
+    #     gain = np.abs(gain) ** 2
+    #     return gain
+
+    # def reset(self):
+    #     noise = 1
+    #     # Reset the state of the environment to an initial state
+    #     self._laststate = np.random.uniform(0, 5, 15) / noise
+    #
+    #     return self._laststate
 
     @property
     def observation_space(self):
@@ -37,10 +51,12 @@ class AIGCEnv(gym.Env):
 
     @property
     def state(self):
+        noise = 1
         # Provide the current state to the agent
         states1 = np.random.uniform(13, 14, 5)
         states2 = np.random.uniform(0, 0.1, 5)
-        states = np.concatenate([states1, states2])
+        states = np.concatenate([states1, states2]) / noise
+        self._channel_gains = states
         self._laststate = states
         return states
 
@@ -49,9 +65,11 @@ class AIGCEnv(gym.Env):
         # Check if episode has ended
         assert not self._terminated, "One episodic has terminated"
         # Calculate reward based on last state and action taken
-        reward, expert_action = CompUtility(self._laststate, action)
+        reward, expert_action, real_action = CompUtility(self._laststate, action)
         self.last_expert_action = expert_action
+        self._laststate = self._channel_gains * real_action
         self._num_steps += 1
+        # print('self._laststate', self._laststate)
         # Check if episode should end based on number of steps taken
         if self._num_steps >= self._steps_per_episode:
             self._terminated = True
