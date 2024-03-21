@@ -56,8 +56,8 @@ def water(s, total_power):
 # Function to compute utility (reward) for the given state and action
 def CompUtility(State, Aution):
     actions = torch.from_numpy(Aution).float()
-    actions = torch.abs(actions)
-    # actions = torch.sigmoid(actions)
+    # actions = torch.abs(actions)
+    actions = torch.sigmoid(1.5*actions)
     Aution = actions.numpy()
 
     total_power = 12

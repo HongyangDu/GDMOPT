@@ -38,8 +38,8 @@ class AIGCEnv(gym.Env):
     @property
     def state(self):
         # Provide the current state to the agent
-        states1 = np.random.uniform(13, 14, 50)
-        states2 = np.random.uniform(0, 0.1, 50)
+        states1 = np.random.uniform(13, 14, 5)
+        states2 = np.random.uniform(0, 0.1, 5)
         states = np.concatenate([states1, states2])
         self._laststate = states
         return states
