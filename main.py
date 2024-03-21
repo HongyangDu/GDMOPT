@@ -60,12 +60,12 @@ def get_args():
                         choices=['linear', 'cosine', 'vp'])
 
     # whether the expert action is availiable
-    parser.add_argument('--expert-coef', default=True)
+    parser.add_argument('--expert-coef', default=False)
 
     # for prioritized experience replay
     parser.add_argument('--prioritized-replay', action='store_true', default=False)
-    parser.add_argument('--prior-alpha', type=float, default=0.6)#0.6
-    parser.add_argument('--prior-beta', type=float, default=0.4)#0.4
+    parser.add_argument('--prior-alpha', type=float, default=0.4)#
+    parser.add_argument('--prior-beta', type=float, default=0.4)#
 
     # Parse arguments and return them
     args = parser.parse_known_args()[0]
@@ -98,7 +98,8 @@ def main(args=get_args()):
         model=actor_net,
         max_action=args.max_action,
         beta_schedule=args.beta_schedule,
-        n_timesteps=args.n_timesteps
+        n_timesteps=args.n_timesteps,
+        expert_coef = args.expert_coef
     ).to(args.device)
     actor_optim = torch.optim.Adam(
         actor.parameters(),

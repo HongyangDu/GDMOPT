@@ -202,11 +202,9 @@ class DiffusionOPT(BasePolicy):
         #
         # The overall loss is a weighted combination of policy gradient loss and behavior cloning loss.
         if self._expert_coef:
-            self._actor.explore_solution = False
             bc_loss = self._update_bc(batch, update=False)
             overall_loss = bc_loss
         else:
-            self._actor.explore_solution = True
             pg_loss = self._update_policy(batch, update=False)
             overall_loss = pg_loss
 

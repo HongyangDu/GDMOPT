@@ -39,7 +39,7 @@ class MLP(nn.Module):
         t = self.time_mlp(time)
         x = torch.cat([x, t, processed_state], dim=1)
         x = self.mid_layer(x)
-        x = self.final_layer(x)
+        # x = self.final_layer(x)
         # return torch.tanh(x)
         return x
 
