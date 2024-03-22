@@ -17,7 +17,7 @@ from .utils import Progress, Silent
 class Diffusion(nn.Module):
     def __init__(self, state_dim, action_dim, model, max_action,
                  beta_schedule='vp', n_timesteps=5,
-                 loss_type='l2', clip_denoised=True, bc_coef=True):
+                 loss_type='l2', clip_denoised=True, bc_coef=0.6):
         # Call parent constructor
         super(Diffusion, self).__init__()
 
@@ -84,7 +84,7 @@ class Diffusion(nn.Module):
             if self.explore_solution, model output is (scaled) noise;
             otherwise, model predicts x0 directly
         '''
-        if self.bc_coef:
+        if self.bc_coef != 0.0:
             return noise
         else:
             return (

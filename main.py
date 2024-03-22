@@ -58,7 +58,7 @@ def get_args():
     parser.add_argument('-t', '--n-timesteps', type=int, default=6)  # for diffusion chain 3 & 8 & 12
     parser.add_argument('--beta-schedule', type=str, default='vp',
                         choices=['linear', 'cosine', 'vp'])
-    parser.add_argument('--bc-coef', default=True)
+    parser.add_argument('--bc-coef', default=0.6)
 
     # for prioritized experience replay
     parser.add_argument('--prioritized-replay', action='store_true', default=False)

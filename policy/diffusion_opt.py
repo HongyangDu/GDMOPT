@@ -29,7 +29,7 @@ class DiffusionOPT(BasePolicy):
             estimation_step: int = 1,
             lr_decay: bool = False,
             lr_maxt: int = 1000,
-            bc_coef: bool = False,
+            bc_coef: float = 0.6,
             exploration_noise: float = 0.1,
             **kwargs: Any
     ) -> None:
@@ -124,11 +124,8 @@ class DiffusionOPT(BasePolicy):
         model_ = self._actor if model == "actor" else self._target_actor
         # Feed observations through the selected model to get action logits
         logits, hidden = model_(obs_), None
-        if self._bc_coef != 0:
-            noise = to_torch(self.noise_generator.generate(logits.shape),
-                             dtype=torch.float32, device=self._device)
-        else:
-            noise = 0
+        # noise = to_torch(self.noise_generator.generate(logits.shape),
+        #                  dtype=torch.float32, device=self._device)
         # Add the noise to the action
         # acts = logits + noise
         acts = logits
@@ -209,12 +206,12 @@ class DiffusionOPT(BasePolicy):
         # Update actor network. Here, we first calculate the policy gradient (pg_loss) and
         # behavior cloning loss (bc_loss) but we do not update the actor network yet.
         # The overall loss is a weighted combination of policy gradient loss and behavior cloning loss.
-        bc_loss = self._update_bc(batch, update=False)
+        bc_loss = self._update_bc(batch, update=False) if self._bc_coef < 1. else 0.
 
         pg_loss = self._update_policy(batch, update=False)
 
-        alpha = 0.5
-        overall_loss = (1 - alpha) * bc_loss + alpha * pg_loss
+
+        overall_loss = self._bc_coef * bc_loss + (1 - self._bc_coef) * pg_loss
 
         self._actor_optim.zero_grad()
         overall_loss.backward()

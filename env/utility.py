@@ -60,7 +60,6 @@ def CompUtility(State, Aution):
     actions = torch.abs(actions)
     # actions = torch.sigmoid(actions)
     Aution = actions.numpy()
-    print('Aution', Aution)
     total_power = 3
     normalized_weights = Aution / np.sum(Aution)
     a = normalized_weights * total_power
