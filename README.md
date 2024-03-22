@@ -1,10 +1,10 @@
-# [Beyond Deep Reinforcement Learning: A Tutorial on Generative Diffusion Models in Network Optimization](https://hongyangdu.github.io/GDMOPT/)
+# [Enhancing Deep Reinforcement Learning: A Tutorial on Generative Diffusion Models in Network Optimization](https://hongyangdu.github.io/GDMOPT/)
 
 Generative Diffusion Models (GDMs) have emerged as a transformative force in the realm of Generative Artificial Intelligence (GAI), demonstrating their versatility and efficacy across a variety of applications. The ability to model complex data distributions and generate high-quality samples has made GDMs particularly effective in tasks such as image generation and reinforcement learning. Furthermore, their iterative nature, which involves a series of noise addition and denoising steps, is a powerful and unique approach to learning and generating data.
 
 This repository contains the code accompanying the paper 
 
-> **"Beyond Deep Reinforcement Learning: A Tutorial on Generative Diffusion Models in Network Optimization"**
+> **"Enhancing Deep Reinforcement Learning: A Tutorial on Generative Diffusion Models in Network Optimization"**
 
 Authored by *Hongyang Du, Ruichen Zhang, Yinqiu Liu, Jiacheng Wang, Yijing Lin, Zonghang Li, Dusit Niyato, Jiawen Kang, Zehui Xiong, Shuguang Cui, Bo Ai, Haibo Zhou, and Dong In Kim*, submitted to *IEEE Communications Surveys & Tutorials*.
 
@@ -74,24 +74,11 @@ pip install scipy==1.10.1
 
 Run `main.py` in the file `Main` to start the program.
 
-*A.* For the case that an expert database is accessible, in main.py, please set
-```bash
-parser.add_argument('--expert-coef', default=True)
-```
-
-In env/utility.py, please set
+*A.* For the considered case, in env/utility.py, please set
 ```bash
 actions = torch.abs(actions)
 ```
 
-*B.* For the scenario where no expert database exists, in main.py, please set
-```bash
-parser.add_argument('--expert-coef', default=False)
-```
-In env/utility.py, please set
-```bash
-actions = torch.sigmod(actions)
-```
 
 ## 🔍 Check the Results
 
@@ -130,57 +117,5 @@ If our diffusion based method can be used in your paper, please help cite:
   author={Du, Hongyang and Zhang, Ruichen and Liu, Yinqiu and Wang, Jiacheng and Lin, Yijing and Li, Zonghang and Niyato, Dusit and Kang, Jiawen and Xiong, Zehui and Cui, Shuguang and Ai, Bo and Zhou, Haibo and Kim, Dong In},
   journal={arXiv preprint arXiv:2308.05384},
   year={2023}
-}
-```
-
-## Technical papers that used our method
-```bibtex
-@article{du2023user,
-  title={User-Centric Interactive AI for Distributed Diffusion Model-based AI-Generated Content},
-  author={Du, Hongyang and Zhang, Ruichen and Niyato, Dusit and Kang, Jiawen and Xiong, Zehui and Cui, Shuguang and Shen, Xuemin and Kim, Dong In},
-  journal={arXiv preprint arXiv:2311.11094},
-  year={2023}
-}
-```
-```bibtex
-@article{du2023ai,
-  title={AI-generated incentive mechanism and full-duplex semantic communications for information sharing},
-  author={Du, Hongyang and Wang, Jiacheng and Niyato, Dusit and Kang, Jiawen and Xiong, Zehui and Kim, Dong In},
-  journal={IEEE Journal on Selected Areas in Communications},
-  year={2023},
-  publisher={IEEE}
-}
-```
-```bibtex
-@article{du2023generative,
-  title={Generative AI-aided Joint Training-free Secure Semantic Communications via Multi-modal Prompts},
-  author={Du, Hongyang and Liu, Guangyuan and Niyato, Dusit and Zhang, Jiayi and Kang, Jiawen and Xiong, Zehui and Ai, Bo and Kim, Dong In},
-  journal={arXiv preprint arXiv:2309.02616},
-  year={2023}
-}
-```
-```bibtex
-@article{wang2023unified,
-  title={A Unified Framework for Guiding Generative AI with Wireless Perception in Resource Constrained Mobile Edge Networks},
-  author={Wang, Jiacheng and Du, Hongyang and Niyato, Dusit and Kang, Jiawen and Xiong, Zehui and Rajan, Deepu and Mao, Shiwen and others},
-  journal={arXiv preprint arXiv:2309.01426},
-  year={2023}
-}
-```
-```bibtex
-@article{du2023yolo,
-  title={YOLO-based Semantic Communication with Generative AI-aided Resource Allocation for Digital Twins Construction},
-  author={Du, Baoxia and Du, Hongyang and Liu, Haifeng and Niyato, Dusit and Xin, Peng and Yu, Jun and Qi, Mingyang and Tang, You},
-  journal={arXiv preprint arXiv:2306.14138},
-  year={2023}
-}
-```
-```bibtex
-@article{du2023diffusion,
-  title={Diffusion-based Reinforcement Learning for Edge-enabled AI-Generated Content Services},
-  author={Du, Hongyang and Li, Zonghang and Niyato, Dusit and Kang, Jiawen and Xiong, Zehui and Huang, Huawei and Mao, Shiwen},
-  journal={Authorea Preprints},
-  year={2023},
-  publisher={arXiv preprint arXiv:2303.13052}
 }
 ```

@@ -17,7 +17,7 @@ from .utils import Progress, Silent
 class Diffusion(nn.Module):
     def __init__(self, state_dim, action_dim, model, max_action,
                  beta_schedule='vp', n_timesteps=5,
-                 loss_type='l2', clip_denoised=True, expert_coef=False):
+                 loss_type='l2', clip_denoised=True, bc_coef=True):
         # Call parent constructor
         super(Diffusion, self).__init__()
 
@@ -42,7 +42,7 @@ class Diffusion(nn.Module):
 
         self.n_timesteps = int(n_timesteps)
         self.clip_denoised = clip_denoised
-        self.expert_coef = expert_coef
+        self.bc_coef = bc_coef
 
         # Register these values as buffers in the module, which PyTorch will track
         self.register_buffer('betas', betas)
@@ -84,7 +84,7 @@ class Diffusion(nn.Module):
             if self.explore_solution, model output is (scaled) noise;
             otherwise, model predicts x0 directly
         '''
-        if self.expert_coef:
+        if self.bc_coef:
             return noise
         else:
             return (
@@ -109,6 +109,7 @@ class Diffusion(nn.Module):
 
         if self.clip_denoised:
             x_recon.clamp_(-self.max_action, self.max_action)
+            # x_recon = torch.tanh(x_recon) * self.max_action
         else:
             assert RuntimeError()
 
@@ -205,12 +206,12 @@ class Diffusion(nn.Module):
         assert noise.shape == x_recon.shape
 
         # if explore_solution is True, compute loss based on the predicted noise and the actual noise
-        # if self.explore_solution:
-        #     loss = self.loss_fn(x_recon, noise, weights)
-        #     # else compute loss based on the predicted original state and the actual original state
-        # else:
-        #     loss = self.loss_fn(x_recon, x_start, weights)
-        loss = self.loss_fn(x_recon, noise, weights)
+        if self.bc_coef:
+            loss = self.loss_fn(x_recon, x_start, weights)
+            # else compute loss based on the predicted original state and the actual original state
+        else:
+            loss = self.loss_fn(x_recon, noise, weights)
+
         return loss
 
     # Compute the total loss by sampling different timesteps for each data in the batch

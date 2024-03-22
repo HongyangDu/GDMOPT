@@ -2,14 +2,13 @@ import torch
 import torch.nn as nn
 from .helpers import SinusoidalPosEmb
 from tianshou.data import Batch, ReplayBuffer, to_torch
-import numpy as np
 
 class MLP(nn.Module):
     def __init__(
         self,
         state_dim,
         action_dim,
-        hidden_dim=128,
+        hidden_dim=256,
         t_dim=16,
         activation='mish'
     ):
@@ -34,6 +33,7 @@ class MLP(nn.Module):
             nn.Linear(hidden_dim, action_dim)
         )
         self.final_layer = nn.Tanh()
+        # self.final_layer = nn.Linear(hidden_dim, action_dim)
 
     def forward(self, x, time, state):
         processed_state = self.state_mlp(state)
@@ -41,6 +41,7 @@ class MLP(nn.Module):
         x = torch.cat([x, t, processed_state], dim=1)
         x = self.mid_layer(x)
         x = self.final_layer(x)
+        # return torch.tanh(x)
         return x
 
 
@@ -63,12 +64,8 @@ class DoubleCritic(nn.Module):
                                       _act(),
                                       nn.Linear(hidden_dim, hidden_dim),
                                       _act(),
-                                      nn.Linear(hidden_dim, hidden_dim),
-                                      _act(),
                                       nn.Linear(hidden_dim, 1))
         self.q2_net = nn.Sequential(nn.Linear(hidden_dim + action_dim, hidden_dim),
-                                      _act(),
-                                      nn.Linear(hidden_dim, hidden_dim),
                                       _act(),
                                       nn.Linear(hidden_dim, hidden_dim),
                                       _act(),
@@ -79,8 +76,6 @@ class DoubleCritic(nn.Module):
     # def q_min(self, obs):
     #     return torch.min(*self.forward(obs))
     def forward(self, state, action):
-        state = to_torch(state, device='cuda:0', dtype=torch.float32)
-        action = to_torch(action, device='cuda:0', dtype=torch.float32)
         processed_state = self.state_mlp(state)
         x = torch.cat([processed_state, action], dim=-1)
         return self.q1_net(x), self.q2_net(x)
@@ -89,23 +84,3 @@ class DoubleCritic(nn.Module):
         # obs = to_torch(obs, device='cuda:0', dtype=torch.float32)
         # action = to_torch(action, device='cuda:0', dtype=torch.float32)
         return torch.min(*self.forward(obs, action))
-
-class GaussianNoise:
-    def __init__(self, sigma: float = 0.1, mu: float = 0.0):
-        """
-        Initialize the Gaussian noise generator.
-
-        :param sigma: Standard deviation of the noise.
-        :param mu: Mean of the noise.
-        """
-        self.sigma = sigma
-        self.mu = mu
-
-    def generate(self, shape):
-        """
-        Generate Gaussian noise based on the given shape.
-
-        :param shape: The shape of the noise to generate, should match the action's shape.
-        :return: A numpy array of noise.
-        """
-        return np.random.normal(self.mu, self.sigma, shape)

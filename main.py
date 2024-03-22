@@ -26,14 +26,14 @@ def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--exploration-noise", type=float, default=0)
     parser.add_argument('--algorithm', type=str, default='diffusion_opt')
-    parser.add_argument('--seed', type=int, default=0)
+    parser.add_argument('--seed', type=int, default=1)
     parser.add_argument('--buffer-size', type=int, default=1e6)#1e6
     parser.add_argument('-e', '--epoch', type=int, default=1e6)# 1000
     parser.add_argument('--step-per-epoch', type=int, default=1)# 100
     parser.add_argument('--step-per-collect', type=int, default=1)#1000
-    parser.add_argument('-b', '--batch-size', type=int, default=64)
+    parser.add_argument('-b', '--batch-size', type=int, default=512)
     parser.add_argument('--wd', type=float, default=1e-4)
-    parser.add_argument('--gamma', type=float, default=0)
+    parser.add_argument('--gamma', type=float, default=1)
     parser.add_argument('--n-step', type=int, default=3)
     parser.add_argument('--training-num', type=int, default=1)
     parser.add_argument('--test-num', type=int, default=1)
@@ -55,12 +55,10 @@ def get_args():
     parser.add_argument('--critic-lr', type=float, default=1e-4)
     parser.add_argument('--tau', type=float, default=0.005)  # for soft update
     # adjust
-    parser.add_argument('-t', '--n-timesteps', type=int, default=5)  # for diffusion chain 3 & 8 & 12
+    parser.add_argument('-t', '--n-timesteps', type=int, default=6)  # for diffusion chain 3 & 8 & 12
     parser.add_argument('--beta-schedule', type=str, default='vp',
                         choices=['linear', 'cosine', 'vp'])
-
-    # whether the expert action is availiable
-    parser.add_argument('--expert-coef', default=True)
+    parser.add_argument('--bc-coef', default=True)
 
     # for prioritized experience replay
     parser.add_argument('--prioritized-replay', action='store_true', default=False)
@@ -99,9 +97,9 @@ def main(args=get_args()):
         max_action=args.max_action,
         beta_schedule=args.beta_schedule,
         n_timesteps=args.n_timesteps,
-        expert_coef = args.expert_coef
+        bc_coef = args.bc_coef
     ).to(args.device)
-    actor_optim = torch.optim.Adam(
+    actor_optim = torch.optim.AdamW(
         actor.parameters(),
         lr=args.actor_lr,
         weight_decay=args.wd
@@ -112,7 +110,7 @@ def main(args=get_args()):
         state_dim=args.state_shape,
         action_dim=args.action_shape
     ).to(args.device)
-    critic_optim = torch.optim.Adam(
+    critic_optim = torch.optim.AdamW(
         critic.parameters(),
         lr=args.critic_lr,
         weight_decay=args.wd
@@ -143,7 +141,7 @@ def main(args=get_args()):
         estimation_step=args.n_step,
         lr_decay=args.lr_decay,
         lr_maxt=args.epoch,
-        expert_coef=args.expert_coef,
+        bc_coef=args.bc_coef,
         action_space=env.action_space,
         exploration_noise = args.exploration_noise,
     )

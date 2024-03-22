@@ -1,6 +1,5 @@
 import numpy as np
 import torch
-import matplotlib.pyplot as plt
 from scipy.stats import nakagami
 from scipy.special import gammainc
 import math
@@ -25,7 +24,7 @@ def water(s, total_power):
 
     # Initialize the upper and lower bounds for the bisection search
     L = 0
-    U = a + N_0 * np.sum(1 / g_n)  # Initial guess for upper bound
+    U = a + N_0 * np.sum(1 / (g_n + 1e-6))  # Initial guess for upper bound
 
     # Define the precision for the bisection search
     precision = 1e-6
@@ -33,7 +32,7 @@ def water(s, total_power):
     # Perform the bisection search for the power level
     while U - L > precision:
         alpha_bar = (L + U) / 2  # Set the current level to be in the middle of bounds
-        p_n = np.maximum(alpha_bar - N_0 / g_n, 0)  # Calculate the power allocation
+        p_n = np.maximum(alpha_bar - N_0 / (g_n + 1e-6), 0)  # Calculate the power allocation
         P = np.sum(p_n)  # Calculate the total power
 
         # Check whether the power budget is under or over-utilized
@@ -43,7 +42,7 @@ def water(s, total_power):
             L = alpha_bar  # Move the lower bound up
 
     # Calculate the final power allocation
-    p_n_final = np.maximum(alpha_bar - N_0 / g_n, 0)
+    p_n_final = np.maximum(alpha_bar - N_0 / (g_n + 1e-6), 0)
 
     # Calculate the data rate for each channel
     SNR = g_n * p_n_final / N_0  # Calculate the SNR
@@ -51,28 +50,29 @@ def water(s, total_power):
     sumdata_rate = np.sum(data_rate)
     # print('p_n_final', p_n_final)
     # print('data_rate', sumdata_rate)
-    return p_n_final, sumdata_rate
+    expert = p_n_final / total_power
+    subexpert = p_n_final / total_power + np.random.normal(0, 0.2, len(p_n_final))
+    return expert, sumdata_rate, subexpert
 
 # Function to compute utility (reward) for the given state and action
 def CompUtility(State, Aution):
-    actions = torch.from_numpy(Aution).float()
+    actions = torch.from_numpy(np.array(Aution)).float()
     actions = torch.abs(actions)
     # actions = torch.sigmoid(actions)
     Aution = actions.numpy()
-
-    total_power = 12
-    g_n = State
-
+    print('Aution', Aution)
+    total_power = 3
     normalized_weights = Aution / np.sum(Aution)
     a = normalized_weights * total_power
 
-    # print('power allocation',a)
-
+    g_n = State
     SNR = g_n * a
 
     data_rate = np.log2(1 + SNR)
 
-    expert_action, sumdata_rate = water(g_n, total_power)
+    expert_action, sumdata_rate, subopt_expert_action = water(g_n, total_power)
 
     reward = np.sum(data_rate) - sumdata_rate
-    return reward, expert_action
+    # reward = np.sum(data_rate) - sumdata_rate
+
+    return reward, expert_action, subopt_expert_action, Aution
