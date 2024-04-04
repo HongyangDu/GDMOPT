@@ -29,7 +29,7 @@ class DiffusionOPT(BasePolicy):
             estimation_step: int = 1,
             lr_decay: bool = False,
             lr_maxt: int = 1000,
-            bc_coef: float = 0.6,
+            bc_coef: bool = False,
             exploration_noise: float = 0.1,
             **kwargs: Any
     ) -> None:
@@ -124,12 +124,16 @@ class DiffusionOPT(BasePolicy):
         model_ = self._actor if model == "actor" else self._target_actor
         # Feed observations through the selected model to get action logits
         logits, hidden = model_(obs_), None
-        # noise = to_torch(self.noise_generator.generate(logits.shape),
-        #                  dtype=torch.float32, device=self._device)
-        # Add the noise to the action
-        # acts = logits + noise
-        acts = logits
-        # acts = torch.clamp(noisy_action, -1, 1)
+
+        if self._bc_coef:
+            acts = logits
+        else:
+            noise = to_torch(self.noise_generator.generate(logits.shape),
+                             dtype=torch.float32, device=self._device)
+            # Add the noise to the action
+            acts = logits + noise
+            acts = torch.clamp(acts, -1, 1)
+
         dist = None  # does not use a probability distribution for actions
 
         return Batch(logits=logits, act=acts, state=obs_, dist=dist)
@@ -167,10 +171,11 @@ class DiffusionOPT(BasePolicy):
     def _update_bc(self, batch: Batch, update: bool = False) -> torch.Tensor:
         # Compute the behavior cloning loss
         obs_ = to_torch(batch.obs, device=self._device, dtype=torch.float32)
-        expert_actions = torch.Tensor([info["sub_expert_action"] for info in batch.info]).to(self._device)
-        # expert_actions.requires_grad = True
+        # expert_actions = torch.Tensor([info["sub_expert_action"] for info in batch.info]).to(self._device)
+        expert_actions = torch.Tensor([info["expert_action"] for info in batch.info]).to(self._device)
+
         bc_loss = self._actor.loss(expert_actions, obs_).mean()
-        # bc_loss = F.mse_loss(actff, expert_action)  # Compute the BC loss between actor logits and expert actions
+
         if update:  # Update actor parameters if update flag is True
             self._actor_optim.zero_grad()  # Zero the actor optimizer's gradients
             bc_loss.backward()  # Backpropagate the loss
@@ -181,9 +186,8 @@ class DiffusionOPT(BasePolicy):
         # Compute the policy gradient loss
         obs_ = to_torch(batch.obs, device=self._device, dtype=torch.float32)
         acts_ = to_torch(self(batch).act, device=self._device, dtype=torch.float32)
-        with torch.no_grad():
-            pg_loss = - self._critic.q_min(obs_, acts_).mean() # Policy gradient loss is negative min Q-value from critic
-        if update: # If update flag is set, backpropagate the loss and perform a step of optimization
+        pg_loss = - self._critic.q_min(obs_, acts_).mean()
+        if update:
             self._actor_optim.zero_grad()
             pg_loss.backward()
             self._actor_optim.step()
@@ -206,16 +210,17 @@ class DiffusionOPT(BasePolicy):
         # Update actor network. Here, we first calculate the policy gradient (pg_loss) and
         # behavior cloning loss (bc_loss) but we do not update the actor network yet.
         # The overall loss is a weighted combination of policy gradient loss and behavior cloning loss.
-        bc_loss = self._update_bc(batch, update=False) if self._bc_coef < 1. else 0.
-
-        pg_loss = self._update_policy(batch, update=False)
-
-
-        overall_loss = self._bc_coef * bc_loss + (1 - self._bc_coef) * pg_loss
+        if self._bc_coef:
+            bc_loss = self._update_bc(batch, update=False)
+            overall_loss = bc_loss
+        else:
+            pg_loss = self._update_policy(batch, update=False)
+            overall_loss = pg_loss
 
         self._actor_optim.zero_grad()
         overall_loss.backward()
         self._actor_optim.step()
+
         # Update the target networks
         self._update_targets()
         return {

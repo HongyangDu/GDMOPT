@@ -51,7 +51,7 @@ def water(s, total_power):
     # print('p_n_final', p_n_final)
     # print('data_rate', sumdata_rate)
     expert = p_n_final / total_power
-    subexpert = p_n_final / total_power + np.random.normal(0, 0.2, len(p_n_final))
+    subexpert = p_n_final / total_power + np.random.normal(0, 0.1, len(p_n_final))
     return expert, sumdata_rate, subexpert
 
 # Function to compute utility (reward) for the given state and action

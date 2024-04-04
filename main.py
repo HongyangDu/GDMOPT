@@ -24,7 +24,7 @@ warnings.filterwarnings('ignore')
 def get_args():
     # Create argument parser
     parser = argparse.ArgumentParser()
-    parser.add_argument("--exploration-noise", type=float, default=0)
+    parser.add_argument("--exploration-noise", type=float, default=0.1)
     parser.add_argument('--algorithm', type=str, default='diffusion_opt')
     parser.add_argument('--seed', type=int, default=1)
     parser.add_argument('--buffer-size', type=int, default=1e6)#1e6
@@ -58,7 +58,11 @@ def get_args():
     parser.add_argument('-t', '--n-timesteps', type=int, default=6)  # for diffusion chain 3 & 8 & 12
     parser.add_argument('--beta-schedule', type=str, default='vp',
                         choices=['linear', 'cosine', 'vp'])
-    parser.add_argument('--bc-coef', default=0.6)
+
+    # With Expert: bc-coef True
+    # Without Expert: bc-coef False
+    # parser.add_argument('--bc-coef', default=False) # Apr-04-132705
+    parser.add_argument('--bc-coef', default=False)
 
     # for prioritized experience replay
     parser.add_argument('--prioritized-replay', action='store_true', default=False)

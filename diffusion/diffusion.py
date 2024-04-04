@@ -17,7 +17,7 @@ from .utils import Progress, Silent
 class Diffusion(nn.Module):
     def __init__(self, state_dim, action_dim, model, max_action,
                  beta_schedule='vp', n_timesteps=5,
-                 loss_type='l2', clip_denoised=True, bc_coef=0.6):
+                 loss_type='l2', clip_denoised=True, bc_coef=False):
         # Call parent constructor
         super(Diffusion, self).__init__()
 
@@ -84,7 +84,7 @@ class Diffusion(nn.Module):
             if self.explore_solution, model output is (scaled) noise;
             otherwise, model predicts x0 directly
         '''
-        if self.bc_coef != 0.0:
+        if self.bc_coef:
             return noise
         else:
             return (
@@ -109,7 +109,6 @@ class Diffusion(nn.Module):
 
         if self.clip_denoised:
             x_recon.clamp_(-self.max_action, self.max_action)
-            # x_recon = torch.tanh(x_recon) * self.max_action
         else:
             assert RuntimeError()
 
@@ -205,13 +204,12 @@ class Diffusion(nn.Module):
 
         assert noise.shape == x_recon.shape
 
-        # if explore_solution is True, compute loss based on the predicted noise and the actual noise
         if self.bc_coef:
             loss = self.loss_fn(x_recon, x_start, weights)
             # else compute loss based on the predicted original state and the actual original state
         else:
             loss = self.loss_fn(x_recon, noise, weights)
-
+        # loss = self.loss_fn(x_recon, noise, weights)
         return loss
 
     # Compute the total loss by sampling different timesteps for each data in the batch

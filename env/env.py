@@ -3,10 +3,6 @@ from gym.spaces import Box, Discrete
 from tianshou.env import DummyVectorEnv
 from .utility import CompUtility
 import numpy as np
-import random
-import torch
-from tianshou.data import Batch, ReplayBuffer, to_torch
-from scipy.io import loadmat
 
 class AIGCEnv(gym.Env):
 
@@ -16,13 +12,13 @@ class AIGCEnv(gym.Env):
         # Define observation space based on the shape of the state
         self._observation_space = Box(shape=self.state.shape, low=0, high=1)
         # Define action space - discrete space with 3 possible actions
-        self._action_space = Discrete(2*50)
+        self._action_space = Discrete(2*5)
         self._num_steps = 0
         self._terminated = False
         self._laststate = None
         self.last_expert_action = None
         # Define the number of steps per episode
-        self._steps_per_episode = 10
+        self._steps_per_episode = 1
 
     @property
     def observation_space(self):
@@ -39,10 +35,12 @@ class AIGCEnv(gym.Env):
     def state(self):
         # Provide the current state to the agent
         # rng = np.random.default_rng(seed=0)
-        # states1 = rng.uniform(4, 5, 5)
+        # states1 = rng.uniform(1, 2, 5)
         # states2 = rng.uniform(0, 1, 5)
-        states1 = np.random.uniform(1, 2, 50)
-        states2 = np.random.uniform(0, 1, 50)
+
+        states1 = np.random.uniform(1, 2, 5)
+        states2 = np.random.uniform(0, 1, 5)
+
         reward_in = []
         reward_in.append(0)
         states = np.concatenate([states1, states2, reward_in])
