@@ -128,11 +128,15 @@ class DiffusionOPT(BasePolicy):
         if self._bc_coef:
             acts = logits
         else:
-            noise = to_torch(self.noise_generator.generate(logits.shape),
-                             dtype=torch.float32, device=self._device)
-            # Add the noise to the action
-            acts = logits + noise
-            acts = torch.clamp(acts, -1, 1)
+            if np.random.rand() < 0.5:
+                # Add exploration noise to the actions
+                noise = to_torch(self.noise_generator.generate(logits.shape),
+                                 dtype=torch.float32, device=self._device)
+                # Add the noise to the action
+                acts = logits + noise
+                acts = torch.clamp(acts, -1, 1)
+            else:
+                acts = logits
 
         dist = None  # does not use a probability distribution for actions
 
