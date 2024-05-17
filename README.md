@@ -6,7 +6,7 @@ This repository contains the code accompanying the paper published in IEEE COMST
 
 > **"Enhancing Deep Reinforcement Learning: A Tutorial on Generative Diffusion Models in Network Optimization"**
 
-Authored by *Hongyang Du, Ruichen Zhang, Yinqiu Liu, Jiacheng Wang, Yijing Lin, Zonghang Li, Dusit Niyato, Jiawen Kang, Zehui Xiong, Shuguang Cui, Bo Ai, Haibo Zhou, and Dong In Kim*, submitted to *IEEE Communications Surveys & Tutorials*.
+Authored by *Hongyang Du, Ruichen Zhang, Yinqiu Liu, Jiacheng Wang, Yijing Lin, Zonghang Li, Dusit Niyato, Jiawen Kang, Zehui Xiong, Shuguang Cui, Bo Ai, Haibo Zhou, and Dong In Kim*, accepted by *IEEE Communications Surveys & Tutorials*.
 
 The paper can be found at [ArXiv](https://arxiv.org/abs/2308.05384) or [IEEE](https://ieeexplore-ieee-org.remotexs.ntu.edu.sg/document/10529221/).
 
