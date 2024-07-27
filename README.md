@@ -81,7 +81,7 @@ actions = torch.abs(actions)
 
 To use the software version, place the two .py files from the Software folder into the main directory (replacing the current main file)
 
-<img src="images/show.png" width = "60%">
+<img src="images/show.png" width = "90%">
 
 
 ## 🔍 Check the Results
