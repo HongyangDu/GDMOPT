@@ -74,10 +74,14 @@ pip install scipy==1.10.1
 
 Run `main.py` in the file `Main` to start the program.
 
-*A.* For the considered case, in env/utility.py, please set
+For the considered case, in env/utility.py, please set
 ```bash
 actions = torch.abs(actions)
 ```
+
+To use the software version, place the two .py files from the Software folder into the main directory (replacing the current main file)
+
+<img src="images/show.png" width = "60%">
 
 
 ## 🔍 Check the Results
