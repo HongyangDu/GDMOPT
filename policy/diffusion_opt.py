@@ -128,7 +128,7 @@ class DiffusionOPT(BasePolicy):
         if self._bc_coef:
             acts = logits
         else:
-            if np.random.rand() < 0.5:
+            if np.random.rand() < 0.1:
                 # Add exploration noise to the actions
                 noise = to_torch(self.noise_generator.generate(logits.shape),
                                  dtype=torch.float32, device=self._device)
