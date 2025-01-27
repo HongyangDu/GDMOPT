@@ -52,7 +52,6 @@ To create a new conda environment, execute the following command:
 ```bash
 conda create --name gdmopt python==3.8
 ```
-<img src="images/4.png" width = "60%">
 
 Activate the created environment with:
 
