@@ -100,7 +100,7 @@ python main.py --watch --resume-path log/default/diffusion/Jul10-142653/policy.p
 
 *A.* Note that the power allocation problem we consider here is a highly simplified one. In such cases, the performance of GDM is not always superior to DRL. For more realistic optimization problems (such as decision problems involving state transitions), considering combining GDM with DRL could be worthwhile, as is explored in our [D2SAC code](https://github.com/Lizonghang/AGOD) and paper:
 
-["Generative AI-aided Optimization for AI-Generated Content (AIGC) Services in Edge Networks."](https://arxiv.org/abs/2303.13052)
+["Diffusion-based Reinforcement Learning for Edge-enabled AI-Generated Content Services."](https://arxiv.org/abs/2303.13052)
 
 Here, the total utility of all users, which is designed as the objective function to be maximized, can only be calculated after a long period of the allocation process. As a result, a decision-making process, such as allocating user tasks to desired servers, has to be modeled by forming a Markov chain.
 
